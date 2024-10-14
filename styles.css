@@ -1,0 +1,66 @@
+body {
+    margin: 0;
+    overflow: hidden;
+}
+
+#game-container {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    background-image: url('imagenes/fondo.jpg'); /* Ruta de la imagen de fondo */
+    background-size: cover; /* La imagen cubrirá toda la pantalla sin distorsionarse */
+    background-position: center; /* Centra la imagen de fondo */
+    background-repeat: no-repeat; /* Evita que la imagen se repita */
+}
+
+/* Resto de los estilos */
+#basket {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 120px;  /* Tamaño del cesto */
+    height: auto;
+}
+
+#falling-object {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50px;
+    height: 50px;
+}
+
+#falling-object-2 {
+    position: absolute;
+    top: 0;
+    left: 50%; 
+    transform: translateX(-50%);
+    width: 50px; /* Tamaño del objeto 2 */
+    height: 50px;
+}
+
+
+#lives {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+}
+
+.life {
+    width: 30px;
+    height: 30px;
+}
+
+#vidas-restantes {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+#pause-button {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+}

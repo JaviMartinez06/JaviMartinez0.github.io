@@ -11,10 +11,10 @@ const vidasRestantes = document.getElementById('vidas-restantes');
 const pauseButton = document.getElementById('pause-button');
 
 // Establecemos las rutas de las imágenes
-const imageRight = 'imagenes/derecha.png';
-const imageLeft = 'imagenes/izquierda.png';
-const vidaImagen = 'imagenes/vida.png';
-const vidaPerdidaImagen = 'imagenes/vida_perdida.png';
+const imageRight = 'derecha.png';
+const imageLeft = 'izquierda.png';
+const vidaImagen = 'vida.png';
+const vidaPerdidaImagen = 'vida_perdida.png';
 
 // Inicializar las imágenes de vidas
 const vidasElements = document.querySelectorAll('.life');
@@ -105,7 +105,7 @@ function updateLives() {
 
 // Crear el segundo objeto que restaura vidas
 const object2 = document.createElement('img');
-object2.src = 'imagenes/Aguacate.png'; // Ruta de la imagen del segundo objeto
+object2.src = 'Aguacate.png'; // Ruta de la imagen del segundo objeto
 object2.id = 'falling-object-2';
 document.getElementById('game-container').appendChild(object2);
 

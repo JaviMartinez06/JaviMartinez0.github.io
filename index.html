@@ -5,20 +5,79 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Juego de Cesto</title>
     <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Estilo para el panel de Game Over */
+        #game-over-panel {
+            display: none; /* Inicialmente oculto */
+            align-items: center;
+            justify-content: center;
+            position: fixed; /* Usar fixed para cubrir toda la pantalla */
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7); /* Fondo semi-transparente */
+            color: white;
+            font-size: 48px;
+            z-index: 10; /* Asegúrate de que esté en frente */
+            text-align: center; /* Centra el texto */
+        }
+
+        /* Asegúrate de que el botón tenga estilo */
+        #restart-button {
+            padding: 10px 20px;
+            font-size: 20px;
+            background-color: #ff0000; /* Color del botón */
+            color: white; /* Color del texto */
+            border: none; /* Sin borde */
+            cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
+            margin-top: 20px; /* Espacio encima del botón */
+        }
+
+        #restart-button:hover {
+            background-color: #e60000; /* Color al pasar el ratón */
+        }
+    </style>
 </head>
+
 <body>
     <div id="game-container">
+
+        <!-- Controles táctiles -->
+        <div id="touch-controls">
+            <button id="btn-left">←</button>
+            <button id="btn-jump">↑</button>
+            <button id="btn-right">→</button>
+        </div>
+
+        <!-- Cesto y objeto que cae -->
         <img id="basket" src="derecha.png" alt="Cesto">
         <img id="falling-object" src="pelota.png" alt="Objeto que cae">
-        <img id="falling-object-2" src="imagenes/Aguacate.png" alt="Objeto que restaura vida">  <!-- Nuevo objeto -->
-        <div id="lives">
-            <img class="life" src="vida.png" alt="Vida 1">
-            <img class="life" src="vida.png" alt="Vida 2">
-            <img class="life" src="vida.png" alt="Vida 3">
+
+        <!-- Vidas del jugador y puntaje -->
+        <div id="info-container">
+            <div id="lives">
+                <img class="life" src="vida.png" alt="Vida 1">
+                <img class="life" src="vida.png" alt="Vida 2">
+                <img class="life" src="vida.png" alt="Vida 3">
+                <img class="life" src="vida.png" alt="Vida 4">
+                <img class="life" src="vida.png" alt="Vida 5">
+            </div>
+            <div id="vidas-restantes">Vidas restantes: 5</div>
+            <div id="scoreDisplay">Score: 0</div>
         </div>
-        <div id="vidas-restantes">Vidas restantes: 3</div>
+
+        <div id="game-over-panel" style="display: none;">
+            <h1>Game Over</h1>
+            <button id="restart-button">Reiniciar Juego</button>
+        </div>
+        
+
+        <!-- Botón de pausa -->
         <button id="pause-button">Pausar</button>
-    </div>
+
+    </div> <!-- Fin de #game-container -->
+
     <script src="script.js"></script>
 </body>
 </html>

@@ -8,48 +8,79 @@
     <style>
         /* Estilo para el panel de Game Over */
         #game-over-panel {
-            display: none; /* Inicialmente oculto */
+            display: none;
             align-items: center;
             justify-content: center;
-            position: fixed; /* Usar fixed para cubrir toda la pantalla */
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.7); /* Fondo semi-transparente */
+            background-color: rgba(0, 0, 0, 0.7);
             color: white;
             font-size: 48px;
-            z-index: 10; /* Asegúrate de que esté en frente */
-            text-align: center; /* Centra el texto */
+            z-index: 10;
+            text-align: center;
         }
 
-        /* Asegúrate de que el botón tenga estilo */
         #restart-button {
             padding: 10px 20px;
             font-size: 20px;
-            background-color: #ff0000; /* Color del botón */
-            color: white; /* Color del texto */
-            border: none; /* Sin borde */
-            cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
-            margin-top: 20px; /* Espacio encima del botón */
+            background-color: #ff0000;
+            color: white;
+            border: none;
+            cursor: pointer;
+            margin-top: 20px;
         }
 
         #restart-button:hover {
-            background-color: #e60000; /* Color al pasar el ratón */
+            background-color: #e60000;
+        }
+
+        /* Estilo para el contenedor de juego */
+        #game-container {
+            position: relative;
+            margin-bottom: 100px; /* Espacio para el panel de controles */
+        }
+
+        /* Panel de controles separado */
+        #control-panel {
+            display: flex;
+            justify-content: space-around;
+            position: fixed;
+            bottom: 20px;
+            width: 100%;
+            height: 80px;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 5;
+            padding: 10px 0;
+        }
+
+        /* Estilo de botones */
+        #control-panel button {
+            width: 60px;
+            height: 60px;
+            font-size: 24px;
+            border: none;
+            border-radius: 10px;
+            background-color: #3498db;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.1s;
+        }
+
+        #control-panel button:active {
+            transform: scale(0.9);
+        }
+
+        #control-panel button:hover {
+            background-color: #2980b9;
         }
     </style>
 </head>
 
 <body>
     <div id="game-container">
-
-        <!-- Controles táctiles -->
-        <div id="touch-controls">
-            <button id="btn-left">←</button>
-            <button id="btn-jump">↑</button>
-            <button id="btn-right">→</button>
-        </div>
-
         <!-- Cesto y objeto que cae -->
         <img id="basket" src="derecha.png" alt="Cesto">
         <img id="falling-object" src="pelota.png" alt="Objeto que cae">
@@ -71,14 +102,22 @@
             <h1>Game Over</h1>
             <button id="restart-button">Reiniciar Juego</button>
         </div>
-        
 
         <!-- Botón de pausa -->
         <button id="pause-button">Pausar</button>
+    </div>
 
-    </div> <!-- Fin de #game-container -->
+    <!-- Panel de controles separado debajo del juego -->
+    <div id="control-panel">
+        <button id="btn-jump">↑</button>
+        <div id="side-controls">
+            <button id="btn-left">←</button>
+            <button id="btn-right">→</button>
+        </div>
+    </div>
 
     <script src="script.js"></script>
 </body>
 </html>
+
 

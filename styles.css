@@ -8,11 +8,25 @@ body {
 #game-container {
     position: relative;
     width: 100%;
-    height: 100vh;
-    background-image: url('sunset.png'); /* Imagen de fondo */
-    background-size: cover; 
+    height: 90vh; /* Cambia esto para dejar un espacio inferior para los controles */
+    background-image: url('imagenes/sunset.png');
+    background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+    overflow: hidden;
+}
+
+/* Panel de controles que estará debajo del área de juego */
+#control-panel {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 90vh; /* Ajusta este valor para controlar el espacio dedicado a los controles */
+    background-color: rgba(245, 5, 5, 0.89); /* Fondo con opacidad */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
 }
 
 /* Estilo del cesto */
@@ -84,14 +98,26 @@ body {
     margin-top: 10px;
 }
 
-/* Controles táctiles */
+/* Estilos para los controles táctiles */
 #touch-controls {
-    position: absolute;
-    bottom: 80px; /* Justo encima del cesto */
-    left: 50%;
-    transform: translateX(-50%);
+    width: 100%;
     display: flex;
-    gap: 20px;
+    justify-content: space-between;
+    padding: 0 20px;
+}
+
+#jump-control {
+    flex: 1;
+    text-align: left;
+}
+
+#side-controls {
+    display: flex;
+    justify-content: flex-end;
+}
+#side-controls button {
+    margin-left: 15px; /* Espacio a la izquierda de cada botón para separarlos */
+    margin-right: 15px; /* Espacio a la derecha */
 }
 
 #touch-controls button {
@@ -104,9 +130,9 @@ body {
     color: white;
     cursor: pointer;
     transition: background-color 0.3s, transform 0.1s;
+    margin: 10px;
 }
 
-/* Efecto al presionar el botón */
 #touch-controls button:active {
     transform: scale(0.9);
 }
@@ -114,6 +140,8 @@ body {
 #touch-controls button:hover {
     background-color: #2980b9;
 }
+
+
 
 /* Gaviota (obstáculo) */
 #seagull {
@@ -156,8 +184,4 @@ body {
     border-radius: 5px;
     font-size: 16px;
     cursor: pointer;
-}
-
-#game-container {
-    transition: background-image 1s ease-in-out; /* Cambia el tiempo de transición si es necesario */
 }

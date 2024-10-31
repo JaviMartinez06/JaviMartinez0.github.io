@@ -9,7 +9,7 @@ body {
     position: relative;
     width: 100%;
     height: 90vh; /* Cambia esto para dejar un espacio inferior para los controles */
-    background-image: url('imagenes/sunset.png');
+    background-image: url('sunset.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;

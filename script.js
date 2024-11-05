@@ -1,6 +1,6 @@
 let basketSpeed = 25;
 let objectSpeed = 8;
-let crabSpeed = 2; // Valor inicial de velocidad (ajústalo a tu preferencia)
+let crabSpeed = 20; // Valor inicial de velocidad (ajústalo a tu preferencia)
 //let jumpHeight = 190; // Altura del salto
 let jumping = false; // Estado del salto
 let vidas = 5; // Vidas totales del Personaje
@@ -95,7 +95,7 @@ function jump() {
 }
 
 function startFallingObject() {
-    const objectSpeed = 5; // Ajustar la velocidad del objeto que cae
+    const objectSpeed = 3; // Ajustar la velocidad del objeto que cae
     fallingObjectInterval = setInterval(() => {
         if (gamePaused) return; // Si el juego está pausado, no hacer nada
 
@@ -328,8 +328,8 @@ document.getElementById('game-container').appendChild(crab1);
 crab1.style.position = 'absolute';
 crab1.style.top = (basket.offsetTop + 60) + 'px'; // Ajustar altura
 crab1.style.left = '0px'; // Sale desde la esquina izquierda
-crab1.style.width = '40px'; // Ajustar tamaño del cangrejo 1
-crab1.style.height = '40px';
+crab1.style.width = '30px'; // Ajustar tamaño del cangrejo 1
+crab1.style.height = '30px';
 
 // Función para aumentar la velocidad del cangrejo
 function increaseCrabSpeed() {
@@ -373,8 +373,8 @@ document.getElementById('game-container').appendChild(crab2);
 crab2.style.position = 'absolute';
 crab2.style.top = (basket.offsetTop + 60) + 'px'; // Ajustar altura
 crab2.style.right = '0px'; // Sale desde la esquina derecha
-crab2.style.width = '40px'; // Ajustar tamaño del cangrejo 2
-crab2.style.height = '40px';
+crab2.style.width = '30px'; // Ajustar tamaño del cangrejo 2
+crab2.style.height = '30px';
 
 // Función para iniciar el movimiento del cangrejo 2
 function startCrab2() {
@@ -415,8 +415,8 @@ seagull.src = 'gaviota.gif';
 seagull.alt = 'Gaviota';
 seagull.id = 'seagull';
 seagull.style.position = 'absolute';
-seagull.style.width = '80px';
-seagull.style.height = '80px';
+seagull.style.width = '70px';
+seagull.style.height = '70px';
 document.getElementById('game-container').appendChild(seagull);
 
 // Función para iniciar el movimiento de la gaviota
@@ -574,11 +574,11 @@ let collectedSpecialItems = new Set(); // Set para almacenar los objetos recolec
 
 // Variable de contador visual de objetos especiales recolectados
 const specialCounterElement = document.getElementById('special-item-counter');
-specialCounterElement.textContent = `Objetos especiales recolectados: ${collectedSpecialItems.size}`;
+specialCounterElement.textContent = `Objetos especiales: ${collectedSpecialItems.size} /5`;
 
 // Función para actualizar el contador en pantalla
 function updateSpecialCounter() {
-    specialCounterElement.textContent = `Objetos especiales recolectados: ${collectedSpecialItems.size}`;
+    specialCounterElement.textContent = `Objetos especiales recolectados: ${collectedSpecialItems.size} /5`;
 }
 
 // Función para mostrar la pantalla de victoria

@@ -1,5 +1,6 @@
 let basketSpeed = 25;
 let objectSpeed = 8;
+let crabSpeed = 2; // Valor inicial de velocidad (ajústalo a tu preferencia)
 //let jumpHeight = 190; // Altura del salto
 let jumping = false; // Estado del salto
 let vidas = 5; // Vidas totales del Personaje
@@ -11,6 +12,8 @@ let fallingObject2Interval; // Intervalo para el segundo objeto
 let crab1Interval; // Intervalo para el cangrejo 1
 let crab2Interval; // Intervalo para el cangrejo 2
 let gamePaused = false; // Estado del juego
+let specialObjectSpeed = 5; // Velocidad inicial de caída para el objeto especial
+let specialItemCount = 0;
 
 const basket = document.getElementById('basket');
 const fallingObject = document.getElementById('falling-object');
@@ -224,6 +227,12 @@ function resetGame() {
     score = 0; // Reiniciar score
     vidas = 5; // Reiniciar vidas
     fallingObject2Interval;
+    specialItemsCollected = 0; // Reiniciar contador de objetos 
+    specialImageIndex = 0; // Reinicia el índice de las imágenes especiales
+    collectedSpecialItems.clear(); // Limpia los objetos recolectados
+    updateSpecialCounter(); // Actualiza el contador en pantalla
+    resetFallingSpecialObject(); // Resetea el objeto especial a su estado inicial
+    updateSpecialCounter(); // Reinicia y actualiza el contador de objetos especiales
     updateLives(); // Actualiza la visualización de vidas
     updateScore(); // Reinicia y actualiza el display del score
     startFallingObject2(); // Reiniciar movimiento del objeto 2 que cae
@@ -321,6 +330,11 @@ crab1.style.top = (basket.offsetTop + 60) + 'px'; // Ajustar altura
 crab1.style.left = '0px'; // Sale desde la esquina izquierda
 crab1.style.width = '40px'; // Ajustar tamaño del cangrejo 1
 crab1.style.height = '40px';
+
+// Función para aumentar la velocidad del cangrejo
+function increaseCrabSpeed() {
+    crabSpeed += 1; // Aumenta la velocidad en 1
+}
 
 // Función para iniciar el movimiento del cangrejo 1
 function startCrab1() {
@@ -454,7 +468,6 @@ setInterval(() => {
 }, 5000);
 
 // Variables para el cesto y los controles
-//const basket = document.getElementById('basket');
 const btnLeft = document.getElementById('btn-left');
 const btnJump = document.getElementById('btn-jump');
 const btnRight = document.getElementById('btn-right');
@@ -462,19 +475,20 @@ const btnRight = document.getElementById('btn-right');
 // Parámetros de movimiento
 const step = 20; // Cantidad de píxeles por movimiento
 const jumpHeight = 190; // Altura máxima del salto
-//let jumping = false; // Estado del salto
+
+let moveLeftInterval, moveRightInterval; // Variables para los intervalos de movimiento
 
 // Función para mover el cesto a la izquierda
 function moveLeft() {
     if (basket.offsetLeft > 0) {
-        basket.style.left = basket.offsetLeft - 10 + 'px'; // Ajustar el valor según tu necesidad
+        basket.style.left = basket.offsetLeft - step + 'px'; // Ajustar el valor según tu necesidad
     }
 }
 
 // Función para mover el cesto a la derecha
 function moveRight() {
     if (basket.offsetLeft < gameContainer.clientWidth - basket.clientWidth) {
-        basket.style.left = basket.offsetLeft + 10 + 'px'; // Ajustar el valor según tu necesidad
+        basket.style.left = basket.offsetLeft + step + 'px'; // Ajustar el valor según tu necesidad
     }
 }
 
@@ -505,25 +519,150 @@ function jump() {
     }, 20);
 }
 
-// Evento para mover hacia la izquierda
-btnLeft.addEventListener('click', () => {
-    const currentLeft = parseInt(window.getComputedStyle(basket).left);
-    if (currentLeft > 0) {
-        basket.style.left = `${currentLeft - step}px`;
-    }
+// Eventos para mantener presionado el botón de izquierda
+btnLeft.addEventListener('mousedown', () => {
+    console.log('Botón Izquierda presionado');
+    moveLeftInterval = setInterval(moveLeft, 100); // Mueve a la izquierda cada 100 ms
+});
+btnLeft.addEventListener('mouseup', () => {
+    clearInterval(moveLeftInterval); // Detiene el movimiento al soltar
+});
+btnLeft.addEventListener('mouseleave', () => {
+    clearInterval(moveLeftInterval); // Detiene el movimiento al salir del botón
 });
 
-// Evento para mover hacia la derecha
-btnRight.addEventListener('click', () => {
-    const currentLeft = parseInt(window.getComputedStyle(basket).left);
-    const containerWidth = document.getElementById('game-container').offsetWidth;
-    const basketWidth = basket.offsetWidth;
-
-    if (currentLeft + basketWidth < containerWidth) {
-        basket.style.left = `${currentLeft + step}px`;
-    }
+// Eventos para mantener presionado el botón de derecha
+btnRight.addEventListener('mousedown', () => {
+    console.log('Botón Derecha presionado');
+    moveRightInterval = setInterval(moveRight, 100); // Mueve a la derecha cada 100 ms
+});
+btnRight.addEventListener('mouseup', () => {
+    clearInterval(moveRightInterval); // Detiene el movimiento al soltar
+});
+btnRight.addEventListener('mouseleave', () => {
+    clearInterval(moveRightInterval); // Detiene el movimiento al salir del botón
 });
 
 // Evento para hacer un salto fluido al presionar el botón táctil
 btnJump.addEventListener('click', jump);
 
+function moveRight() {
+    console.log('Moviendo a la derecha'); // Depuración
+    if (basket.offsetLeft < gameContainer.clientWidth - basket.clientWidth) {
+        basket.style.left = basket.offsetLeft + step + 'px'; // Ajustar el valor según tu necesidad
+    }
+}
+
+//--------------------------------------------------Crear el objeto especial que cuenta para la victoria------------------------------------------------------------------------------------
+
+const specialObject = document.createElement('img');
+specialObject.src = 'estrella.png'; // Ruta inicial de la imagen del objeto especial
+specialObject.id = 'falling-special-object';
+document.getElementById('game-container').appendChild(specialObject);
+
+// Estilo inicial del objeto especial
+specialObject.style.position = 'absolute';
+specialObject.style.top = '0px';
+specialObject.style.left = Math.random() * (window.innerWidth - 40) + 'px';
+specialObject.style.width = '40px';
+specialObject.style.height = '40px';
+
+// Rutas de las imágenes en orden para el objeto especial
+const specialImages = ['estrella.png', 'moneda.png', 'sandia.png', 'pera.png', 'galleta.png'];
+let specialImageIndex = 0; // Índice actual de imagen
+let collectedSpecialItems = new Set(); // Set para almacenar los objetos recolectados
+
+// Variable de contador visual de objetos especiales recolectados
+const specialCounterElement = document.getElementById('special-item-counter');
+specialCounterElement.textContent = `Objetos especiales recolectados: ${collectedSpecialItems.size}`;
+
+// Función para actualizar el contador en pantalla
+function updateSpecialCounter() {
+    specialCounterElement.textContent = `Objetos especiales recolectados: ${collectedSpecialItems.size}`;
+}
+
+// Función para mostrar la pantalla de victoria
+function displayVictory() {
+    const victoryScreen = document.createElement('div');
+    victoryScreen.id = 'victory-screen';
+    victoryScreen.style.position = 'fixed';
+    victoryScreen.style.top = '0';
+    victoryScreen.style.left = '0';
+    victoryScreen.style.width = '100%';
+    victoryScreen.style.height = '100%';
+    victoryScreen.style.backgroundImage = "url('you_win.gif')";
+    victoryScreen.style.backgroundSize = 'cover';
+    victoryScreen.style.backgroundPosition = 'center';
+    victoryScreen.style.display = 'flex';
+    victoryScreen.style.justifyContent = 'center';
+    victoryScreen.style.alignItems = 'center';
+    victoryScreen.style.color = 'white';
+    victoryScreen.style.fontSize = '2em';
+    victoryScreen.style.zIndex = '1000';
+
+    const restartButton = document.createElement('button');
+    restartButton.textContent = 'Reiniciar Juego';
+    restartButton.style.marginTop = '20px';
+    restartButton.style.padding = '10px 20px';
+    restartButton.style.fontSize = '1.5em';
+    restartButton.style.cursor = 'pointer';
+    restartButton.style.backgroundColor = 'rgba(255, 255, 255, 0.8)';
+    restartButton.style.color = 'black';
+    restartButton.style.border = 'none';
+    restartButton.style.borderRadius = '5px';
+    restartButton.style.position = 'relative';
+    restartButton.style.top = '10px';
+
+    restartButton.addEventListener('click', () => {
+        document.body.removeChild(victoryScreen);
+        resetGame();
+    });
+
+    victoryScreen.appendChild(restartButton);
+    document.body.appendChild(victoryScreen);
+}
+
+// Función para iniciar el movimiento del objeto especial con cambio de imagen en cada caída
+function startFallingSpecialObject() {
+    specialObject.src = specialImages[specialImageIndex]; // Cambia la imagen del objeto
+    specialObject.style.top = '0px';
+    specialObject.style.left = Math.random() * (window.innerWidth - 40) + 'px';
+
+    let fallingSpecialInterval = setInterval(() => {
+        if (gamePaused) return;
+
+        const specialTop = parseInt(window.getComputedStyle(specialObject).getPropertyValue('top'));
+        specialObject.style.top = specialTop + (objectSpeed - 2) + 'px';
+
+        let randomDirection = Math.random() < 0.5 ? -5 : 5;
+        let newLeft = specialObject.offsetLeft + randomDirection;
+        if (newLeft >= 0 && newLeft <= window.innerWidth - 40) {
+            specialObject.style.left = newLeft + 'px';
+        }
+
+        if (specialTop > window.innerHeight) {
+            resetFallingSpecialObject();
+        } else if (isColliding(basket, specialObject)) {
+            if (!collectedSpecialItems.has(specialImages[specialImageIndex])) {
+                collectedSpecialItems.add(specialImages[specialImageIndex]);
+                updateSpecialCounter();
+            }
+            resetFallingSpecialObject();
+
+            if (collectedSpecialItems.size === 5) {
+                displayVictory();
+                clearInterval(fallingSpecialInterval);
+            }
+        }
+    }, 100);
+}
+
+// Función para restablecer el objeto especial y preparar la siguiente imagen
+function resetFallingSpecialObject() {
+    specialImageIndex = (specialImageIndex + 1) % specialImages.length; // Cambiar a la siguiente imagen
+    specialObject.style.top = '0px';
+    specialObject.style.left = Math.random() * (window.innerWidth - 40) + 'px';
+}
+
+// Lanza un objeto especial cada 10 segundos
+setInterval(startFallingSpecialObject, 10000);

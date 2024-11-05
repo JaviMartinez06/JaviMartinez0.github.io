@@ -35,8 +35,8 @@ body {
     bottom: 20px;
     left: 50%;
     transform: translateX(-50%);
-    width: 120px;
-    height: auto;
+    width: 90px;
+    height: 90px;
 }
 
 /* Objetos que caen */
@@ -184,4 +184,27 @@ body {
     border-radius: 5px;
     font-size: 16px;
     cursor: pointer;
+}
+.special-item {
+    position: absolute;
+    width: 40px; /* Ajusta el tamaño según tus necesidades */
+    height: 40px; /* Ajusta el tamaño según tus necesidades */
+    background-image: url('estrella.png'); /* Reemplaza con la ruta de la imagen */
+    background-size: cover; /* Asegura que la imagen se ajuste completamente al tamaño */
+    background-repeat: no-repeat;
+}
+#celebration-screen {
+    /* Puedes agregar estilos adicionales aquí si lo deseas */
+    text-align: center;
+    color: white;
+}
+#special-item-counter {
+    position: absolute;
+    top: 50px; /* Ajusta este valor para controlar la altura desde el borde superior */
+    left: 10px; /* Mantén el contador en el lado izquierdo */
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 1.2em;
 }
